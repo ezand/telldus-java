@@ -6,20 +6,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import no.ezand.telldus.cli.utils.CommandExecutor;
-import no.ezand.telldus.cli.utils.TelldusException;
 import no.ezand.telldus.cli.data.Device;
 import no.ezand.telldus.cli.data.LastSentCommand;
 import no.ezand.telldus.cli.data.Sensor;
 import no.ezand.telldus.cli.utils.CliResultParser;
+import no.ezand.telldus.cli.utils.CommandExecutor;
+import no.ezand.telldus.cli.utils.TelldusException;
 
 public class CliRepository implements TelldusRepository {
 	private final String tdtool;
-	private final Properties properties = new Properties();
 
 	public CliRepository() throws Exception {
+		final Properties properties = new Properties();
 		properties.load(getClass().getResourceAsStream("/telldus.properties"));
-		tdtool = properties.getProperty("tdtool.path");
+		this.tdtool = properties.getProperty("tdtool.path");
+	}
+
+	public CliRepository(final String tdtoolPath) {
+		this.tdtool = tdtoolPath;
 	}
 
 	@Override
