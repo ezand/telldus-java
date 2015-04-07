@@ -1,4 +1,4 @@
-package no.ezand.telldus.cli;
+package no.ezand.telldus.cli.data;
 
 public enum SensorProtocol {
 	MANDOLYN;

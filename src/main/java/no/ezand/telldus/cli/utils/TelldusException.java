@@ -1,4 +1,4 @@
-package no.ezand.telldus.cli;
+package no.ezand.telldus.cli.utils;
 
 public class TelldusException extends RuntimeException {
 	public TelldusException() {
