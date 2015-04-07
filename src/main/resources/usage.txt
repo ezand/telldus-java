@@ -1,9 +1,0 @@
-Telldus live
-
-Usage:
-  telldus-live device (on|off|status) <device_id>
-  telldus-live -h | --help
-
-Options:
-  -h --help     Show this screen.
-  
