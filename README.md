@@ -1,1 +1,1 @@
-Integrate with Telldus CLI
+Java wrapper around the Telldus CLI (tdtool)
