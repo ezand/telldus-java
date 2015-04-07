@@ -1,4 +1,4 @@
-package no.ezand.telldus.cli.utils;
+package org.ezand.telldus.cli.utils;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Arrays.stream;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import no.ezand.telldus.cli.data.Device;
-import no.ezand.telldus.cli.data.Sensor;
+import org.ezand.telldus.cli.data.Device;
+import org.ezand.telldus.cli.data.Sensor;
 
 import com.google.common.base.Splitter;
 

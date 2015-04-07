@@ -1,10 +1,8 @@
-package no.ezand.telldus.cli.utils;
+package org.ezand.telldus.cli.utils;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-
-import no.ezand.telldus.cli.utils.TelldusException;
 
 public class CommandExecutor {
 	public static String execute(String... command) {

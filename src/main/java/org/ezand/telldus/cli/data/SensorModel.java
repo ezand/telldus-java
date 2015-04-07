@@ -1,4 +1,4 @@
-package no.ezand.telldus.cli.data;
+package org.ezand.telldus.cli.data;
 
 import static java.util.Arrays.stream;
 

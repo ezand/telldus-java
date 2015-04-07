@@ -1,4 +1,4 @@
-package no.ezand.telldus.cli.repository;
+package org.ezand.telldus.cli.repository;
 
 import static java.lang.String.valueOf;
 
@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import no.ezand.telldus.cli.data.Device;
-import no.ezand.telldus.cli.data.LastSentCommand;
-import no.ezand.telldus.cli.data.Sensor;
-import no.ezand.telldus.cli.utils.CliResultParser;
-import no.ezand.telldus.cli.utils.CommandExecutor;
-import no.ezand.telldus.cli.utils.TelldusException;
+import org.ezand.telldus.cli.data.Device;
+import org.ezand.telldus.cli.data.LastSentCommand;
+import org.ezand.telldus.cli.data.Sensor;
+import org.ezand.telldus.cli.utils.CliResultParser;
+import org.ezand.telldus.cli.utils.CommandExecutor;
+import org.ezand.telldus.cli.utils.TelldusException;
 
 public class CliRepository implements TelldusRepository {
 	private final String tdtool;
