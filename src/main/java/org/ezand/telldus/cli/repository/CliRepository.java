@@ -22,18 +22,30 @@ public class CliRepository implements TelldusRepository {
 		this.tdtool = tdtool;
 	}
 
+	/**
+	 * @return a list of {@link Device} objects.
+	 */
 	@Override
 	public List<Device> getDevices() {
 		return parseDevices(CommandExecutor.execute(tdtool, "--list-devices"));
 	}
 
+	/**
+	 * @return a list of {@link Sensor} objects.
+	 * @throws TelldusException if tdtool-command fails.
+	 */
 	@Override
 	public List<Sensor> getSensors() throws TelldusException {
 		return parseSensors(CommandExecutor.execute(tdtool, "--list-sensors"));
 	}
 
+	/**
+	 * @param id the device id.
+	 * @return the device state as a String.
+	 * @throws TelldusException if tdtool-command fails.
+	 */
 	@Override
-	public String getDeviceState(final int id) {
+	public String getDeviceState(final int id) throws TelldusException {
 		final Optional<Device> optional = getDevices().stream().filter(d -> d.getId() == id).findFirst();
 		final Device device = optional.orElseThrow(() -> new TelldusException("State unknown"));
 		switch (device.getLastSentCommand()) {
@@ -48,18 +60,34 @@ public class CliRepository implements TelldusRepository {
 		}
 	}
 
+	/**
+	 * @param id the device id.
+	 * @return true if device was successfully switched on, false otherwise.
+	 * @throws TelldusException if tdtool-command fails.
+	 */
 	@Override
-	public boolean turnDeviceOn(final int deviceId) {
-		return parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(deviceId)));
+	public boolean turnDeviceOn(final int id) throws TelldusException {
+		return parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(id)));
 	}
 
+	/**
+	 * @param id the device id.
+	 * @return true if device was successfully switched off, false otherwise.
+	 * @throws TelldusException if tdtool-command fails.
+	 */
 	@Override
-	public boolean turnDeviceOff(final int deviceId) {
-		return parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(deviceId)));
+	public boolean turnDeviceOff(final int id) {
+		return parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(id)));
 	}
 
+	/**
+	 * @param id the device id.
+	 * @param level the dim-level value (0-255).
+	 * @return the curretn dim-level value (0-255) after the operation is finished.
+	 * @throws TelldusException if tdtool-command fails.
+	 */
 	@Override
-	public int dimDevice(final int deviceId, final int level) throws TelldusException {
-		return parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(deviceId)));
+	public int dimDevice(final int id, final int level) throws TelldusException {
+		return parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)));
 	}
 }

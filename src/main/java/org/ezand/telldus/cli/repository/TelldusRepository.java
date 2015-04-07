@@ -11,11 +11,11 @@ public interface TelldusRepository {
 
 	String getDeviceState(int id) throws TelldusException;
 
-	boolean turnDeviceOn(int deviceId) throws TelldusException;
+	boolean turnDeviceOn(int id) throws TelldusException;
 
-	boolean turnDeviceOff(int deviceId) throws TelldusException;
+	boolean turnDeviceOff(int id) throws TelldusException;
 
-	int dimDevice(int deviceId, int level) throws TelldusException;
+	int dimDevice(int id, int level) throws TelldusException;
 
 	List<Sensor> getSensors() throws TelldusException;
 }

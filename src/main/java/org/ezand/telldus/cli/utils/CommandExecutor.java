@@ -5,7 +5,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class CommandExecutor {
-	public static String execute(String... command) {
+	/**
+	 * Natively execute the tdtool command.
+	 *
+	 * @param command array of the command and its parameters
+	 * @return command result as a String
+	 */
+	public static String execute(final String... command) {
 		try {
 			final ProcessBuilder builder = new ProcessBuilder(command);
 			final Process process = builder.start();
