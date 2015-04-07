@@ -1,39 +1,35 @@
 package org.ezand.telldus.cli.repository;
 
 import static java.lang.String.valueOf;
+import static org.ezand.telldus.cli.utils.CliResultParser.parseDevices;
+import static org.ezand.telldus.cli.utils.CliResultParser.parseDimResult;
+import static org.ezand.telldus.cli.utils.CliResultParser.parseSensors;
+import static org.ezand.telldus.cli.utils.CliResultParser.parseSwitchResult;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 
 import org.ezand.telldus.cli.data.Device;
 import org.ezand.telldus.cli.data.LastSentCommand;
 import org.ezand.telldus.cli.data.Sensor;
-import org.ezand.telldus.cli.utils.CliResultParser;
 import org.ezand.telldus.cli.utils.CommandExecutor;
 import org.ezand.telldus.cli.utils.TelldusException;
 
 public class CliRepository implements TelldusRepository {
 	private final String tdtool;
 
-	public CliRepository() throws Exception {
-		final Properties properties = new Properties();
-		properties.load(getClass().getResourceAsStream("/telldus.properties"));
-		this.tdtool = properties.getProperty("tdtool.path");
-	}
-
-	public CliRepository(final String tdtoolPath) {
-		this.tdtool = tdtoolPath;
+	public CliRepository(final String tdtool) {
+		this.tdtool = tdtool;
 	}
 
 	@Override
 	public List<Device> getDevices() {
-		return CliResultParser.parseDevices(CommandExecutor.execute(tdtool, "--list-devices"));
+		return parseDevices(CommandExecutor.execute(tdtool, "--list-devices"));
 	}
 
 	@Override
 	public List<Sensor> getSensors() throws TelldusException {
-		return CliResultParser.parseSensors(CommandExecutor.execute(tdtool, "--list-sensors"));
+		return parseSensors(CommandExecutor.execute(tdtool, "--list-sensors"));
 	}
 
 	@Override
@@ -54,16 +50,16 @@ public class CliRepository implements TelldusRepository {
 
 	@Override
 	public boolean turnDeviceOn(final int deviceId) {
-		return CliResultParser.parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(deviceId)));
+		return parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(deviceId)));
 	}
 
 	@Override
 	public boolean turnDeviceOff(final int deviceId) {
-		return CliResultParser.parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(deviceId)));
+		return parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(deviceId)));
 	}
 
 	@Override
-	public int dimDevice(int deviceId, int level) throws TelldusException {
-		return CliResultParser.parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(deviceId)));
+	public int dimDevice(final int deviceId, final int level) throws TelldusException {
+		return parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(deviceId)));
 	}
 }
