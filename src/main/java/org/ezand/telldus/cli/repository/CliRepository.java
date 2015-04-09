@@ -1,6 +1,11 @@
 package org.ezand.telldus.cli.repository;
 
 import static java.lang.String.valueOf;
+import static org.ezand.telldus.cli.data.LastSentCommand.OFF;
+import static org.ezand.telldus.cli.data.LastSentCommand.ON;
+import static org.ezand.telldus.cli.data.Type.DIMMER;
+import static org.ezand.telldus.cli.data.Type.SWITCH;
+import static org.ezand.telldus.cli.data.Type.UNKNOWN;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseDevices;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseDimResult;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseSensors;
@@ -10,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.ezand.telldus.cli.data.Device;
-import org.ezand.telldus.cli.data.LastSentCommand;
 import org.ezand.telldus.cli.data.Sensor;
+import org.ezand.telldus.cli.data.State;
 import org.ezand.telldus.cli.utils.CommandExecutor;
 import org.ezand.telldus.cli.utils.TelldusException;
 
@@ -41,22 +46,22 @@ public class CliRepository implements TelldusRepository {
 
 	/**
 	 * @param id the device id.
-	 * @return the device state as a String.
+	 * @return a {@link State} object containing the device type and state.
 	 * @throws TelldusException if tdtool-command fails.
 	 */
 	@Override
-	public String getDeviceState(final int id) throws TelldusException {
+	public State getDeviceState(final int id) throws TelldusException {
 		final Optional<Device> optional = getDevices().stream().filter(d -> d.getId() == id).findFirst();
 		final Device device = optional.orElseThrow(() -> new TelldusException("State unknown"));
 		switch (device.getLastSentCommand()) {
 			case ON:
-				return LastSentCommand.ON.name();
+				return new State(SWITCH, ON.name());
 			case OFF:
-				return LastSentCommand.OFF.name();
+				return new State(SWITCH, OFF.name());
 			case DIMMED:
-				return LastSentCommand.DIMMED.name() + " dim_level=" + device.getProperties().get("dimlevel");
+				return new State(DIMMER, device.getProperties().get("dimlevel"));
 			default:
-				return "Unknown state";
+				return new State(UNKNOWN, "Unknown state");
 		}
 	}
 
@@ -81,7 +86,7 @@ public class CliRepository implements TelldusRepository {
 	}
 
 	/**
-	 * @param id the device id.
+	 * @param id    the device id.
 	 * @param level the dim-level value (0-255).
 	 * @return the curretn dim-level value (0-255) after the operation is finished.
 	 * @throws TelldusException if tdtool-command fails.
