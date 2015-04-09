@@ -12,11 +12,11 @@ public interface TelldusRepository {
 
 	State getDeviceState(int id) throws TelldusException;
 
-	boolean turnDeviceOn(int id) throws TelldusException;
+	State turnDeviceOn(int id) throws TelldusException;
 
-	boolean turnDeviceOff(int id) throws TelldusException;
+	State turnDeviceOff(int id) throws TelldusException;
 
-	int dimDevice(int id, int level) throws TelldusException;
+	State dimDevice(int id, int level) throws TelldusException;
 
 	List<Sensor> getSensors() throws TelldusException;
 }

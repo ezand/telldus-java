@@ -1,8 +1,6 @@
 package org.ezand.telldus.cli.repository;
 
 import static java.lang.String.valueOf;
-import static org.ezand.telldus.cli.data.LastSentCommand.OFF;
-import static org.ezand.telldus.cli.data.LastSentCommand.ON;
 import static org.ezand.telldus.cli.data.Type.DIMMER;
 import static org.ezand.telldus.cli.data.Type.SWITCH;
 import static org.ezand.telldus.cli.data.Type.UNKNOWN;
@@ -17,6 +15,7 @@ import java.util.Optional;
 import org.ezand.telldus.cli.data.Device;
 import org.ezand.telldus.cli.data.Sensor;
 import org.ezand.telldus.cli.data.State;
+import org.ezand.telldus.cli.data.SwitchState;
 import org.ezand.telldus.cli.utils.CommandExecutor;
 import org.ezand.telldus.cli.utils.TelldusException;
 
@@ -55,9 +54,9 @@ public class CliRepository implements TelldusRepository {
 		final Device device = optional.orElseThrow(() -> new TelldusException("State unknown"));
 		switch (device.getLastSentCommand()) {
 			case ON:
-				return new State(SWITCH, ON.name());
+				return new State(SWITCH, SwitchState.ON.lowerName());
 			case OFF:
-				return new State(SWITCH, OFF.name());
+				return new State(SWITCH, SwitchState.OFF.lowerName());
 			case DIMMED:
 				return new State(DIMMER, device.getProperties().get("dimlevel"));
 			default:
@@ -71,8 +70,9 @@ public class CliRepository implements TelldusRepository {
 	 * @throws TelldusException if tdtool-command fails.
 	 */
 	@Override
-	public boolean turnDeviceOn(final int id) throws TelldusException {
-		return parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(id)));
+	public State turnDeviceOn(final int id) throws TelldusException {
+		final boolean success = parseSwitchResult(CommandExecutor.execute(tdtool, "--on", valueOf(id)));
+		return new State(SWITCH, success ? SwitchState.ON.lowerName() : SwitchState.OFF.lowerName());
 	}
 
 	/**
@@ -81,8 +81,9 @@ public class CliRepository implements TelldusRepository {
 	 * @throws TelldusException if tdtool-command fails.
 	 */
 	@Override
-	public boolean turnDeviceOff(final int id) {
-		return parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(id)));
+	public State turnDeviceOff(final int id) {
+		final boolean success = parseSwitchResult(CommandExecutor.execute(tdtool, "--off", valueOf(id)));
+		return new State(SWITCH, success ? SwitchState.OFF.lowerName() : SwitchState.ON.lowerName());
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class CliRepository implements TelldusRepository {
 	 * @throws TelldusException if tdtool-command fails.
 	 */
 	@Override
-	public int dimDevice(final int id, final int level) throws TelldusException {
-		return parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)));
+	public State dimDevice(final int id, final int level) throws TelldusException {
+		return new State(DIMMER, valueOf(parseDimResult(CommandExecutor.execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)))));
 	}
 }
