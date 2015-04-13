@@ -2,22 +2,23 @@ package org.ezand.telldus.cli.repository;
 
 import static java.lang.String.valueOf;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.ezand.telldus.cli.data.Type.DIMMER;
-import static org.ezand.telldus.cli.data.Type.SWITCH;
-import static org.ezand.telldus.cli.data.Type.UNKNOWN;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseDevices;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseDimResult;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseSensors;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseSwitchResult;
 import static org.ezand.telldus.cli.utils.CommandExecutor.execute;
+import static org.ezand.telldus.core.domain.Type.DIMMER;
+import static org.ezand.telldus.core.domain.Type.SWITCH;
+import static org.ezand.telldus.core.domain.Type.UNKNOWN;
 
 import java.util.List;
 
-import org.ezand.telldus.cli.data.Device;
-import org.ezand.telldus.cli.data.Sensor;
-import org.ezand.telldus.cli.data.State;
-import org.ezand.telldus.cli.data.SwitchState;
-import org.ezand.telldus.cli.utils.TelldusException;
+import org.ezand.telldus.core.TelldusException;
+import org.ezand.telldus.core.domain.Device;
+import org.ezand.telldus.core.domain.Sensor;
+import org.ezand.telldus.core.domain.State;
+import org.ezand.telldus.core.domain.SwitchState;
+import org.ezand.telldus.core.repository.TelldusRepository;
 
 public class CliRepository implements TelldusRepository {
 	private final String tdtool;

@@ -15,7 +15,7 @@
 	<description>Java wrapper around the Telldus CLI (tdtool)</description>
 
 	<properties>
-		<guava.version>18.0</guava.version>
+		<telldus-core.version>1.0-SNAPSHOT</telldus-core.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
 	</properties>
 
@@ -28,8 +28,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<groupId>org.ezand.telldus</groupId>
+			<artifactId>telldus-core</artifactId>
 		</dependency>
 
 		<dependency>
@@ -41,9 +41,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
+				<groupId>org.ezand.telldus</groupId>
+				<artifactId>telldus-core</artifactId>
+				<version>${telldus-core.version}</version>
 			</dependency>
 
 			<dependency>

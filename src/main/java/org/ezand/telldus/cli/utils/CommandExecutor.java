@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.ezand.telldus.core.TelldusException;
+
 public class CommandExecutor {
 	/**
 	 * Natively execute the tdtool command.

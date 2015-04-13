@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.ezand.telldus.cli.data.Device;
-import org.ezand.telldus.cli.data.Sensor;
+import org.ezand.telldus.core.TelldusException;
+import org.ezand.telldus.core.domain.Device;
+import org.ezand.telldus.core.domain.Sensor;
 
 import com.google.common.base.Splitter;
 
