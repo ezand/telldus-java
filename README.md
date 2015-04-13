@@ -83,4 +83,4 @@ Java wrapper around the Telldus CLI (tdtool). This is a work in progress, improv
 </table>
 
 # Domain
-See [https://github.com/ezand/telldus-core](telldus-core)
+See [telldus-core](https://github.com/ezand/telldus-core)
