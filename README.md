@@ -45,7 +45,7 @@ Java wrapper around the Telldus CLI (tdtool)
     <td><img src="static/yes.png"/></td>
   </tr>
   <tr>
-    <td>Get sensor/device state (last sent command)</td>
+    <td>Get device state (last sent command)</td>
     <td><img src="static/yes.png"/></td>
   </tr>
 </table>
