@@ -2,6 +2,7 @@
 Java wrapper around the Telldus CLI (tdtool)
 
 [![Build Status](https://travis-ci.org/ezand/telldus-java.svg?branch=master)](https://travis-ci.org/ezand/telldus-java)
+[![Javadoc](http://javadoc-badge.appspot.com/org.ezand.telldus/telldus-java.svg?label=javadoc)](http://ezand.org/javadocs/telldus-java/release/1.0/)
 
 # Build Tools
 ### Maven
