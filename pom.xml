@@ -9,7 +9,7 @@
 	<groupId>org.ezand.telldus</groupId>
 	<artifactId>telldus-java</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<name>Telldus - Java</name>
 	<description>Java wrapper around the Telldus CLI (tdtool)</description>
 
@@ -22,7 +22,7 @@
 		<connection>scm:git:git@github.com:ezand/telldus-java.git</connection>
 		<url>scm:git:git@github.com:ezand/telldus-java.git</url>
 		<developerConnection>scm:git:git@github.com:ezand/telldus-java.git</developerConnection>
-		<tag>telldus-java-1.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
