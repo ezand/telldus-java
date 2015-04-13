@@ -1,8 +1,11 @@
 package org.ezand.telldus.cli.utils;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.parseInt;
+import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,17 +24,17 @@ public class CliResultParser {
 	 * @return a list of {@link Device} objects.
 	 */
 	public static List<Device> parseDevices(final String devices) {
-		return stream(devices.split("\n"))
+		return isEmpty(devices) ? newArrayList() : stream(devices.split("\n"))
 				.map(d -> new Device(Splitter.on("\t").withKeyValueSeparator("=").split(d)))
 				.collect(toList());
 	}
 
 	/**
 	 * @param sensors as a concatenated String.
-	 * @return a list of {@link Sensor} objects
+	 * @return a list of {@link Sensor} objects.
 	 */
 	public static List<Sensor> parseSensors(final String sensors) {
-		return stream(sensors.split("\n"))
+		return isEmpty(sensors) ? newArrayList() : stream(sensors.split("\n"))
 				.map(d -> new Sensor(Splitter.on("\t").withKeyValueSeparator("=").split(d)))
 				.collect(toList());
 	}
@@ -47,11 +50,12 @@ public class CliResultParser {
 	/**
 	 * @param result as a String.
 	 * @return the dim-level value.
+	 * @throws TelldusException if dim result can't be retrieved.
 	 */
 	public static int parseDimResult(final String result) {
 		final Matcher matcher = DIM_RESULT_PATTERN.matcher(result.trim());
 		if (!matcher.find()) {
-			throw new TelldusException("Could not get dim result");
+			throw new TelldusException(format("Could not get dim result from '%s'", result));
 		}
 		return parseInt(matcher.group(3));
 	}
