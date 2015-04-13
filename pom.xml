@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>org.ezand</groupId>
 		<artifactId>parent</artifactId>
@@ -10,7 +9,7 @@
 	<groupId>org.ezand.telldus</groupId>
 	<artifactId>telldus-java</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.1</version>
 	<name>Telldus - Java</name>
 	<description>Java wrapper around the Telldus CLI (tdtool)</description>
 
@@ -23,7 +22,7 @@
 		<connection>scm:git:git@github.com:ezand/telldus-java.git</connection>
 		<url>scm:git:git@github.com:ezand/telldus-java.git</url>
 		<developerConnection>scm:git:git@github.com:ezand/telldus-java.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>telldus-java-1.1</tag>
 	</scm>
 
 	<dependencies>
