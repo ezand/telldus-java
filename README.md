@@ -10,14 +10,14 @@ Java wrapper around the Telldus CLI (tdtool). This is a work in progress, improv
     <dependency>
         <groupId>org.ezand.telldus</groupId>
         <artifactId>telldus-java</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </dependency>
 
 ### Gradle
-    runtime group: 'org.ezand.telldus', name: 'telldus-java', version: '1.0'
+    runtime group: 'org.ezand.telldus', name: 'telldus-java', version: '1.1'
 
 ### Leiningen
-    [org.ezand.telldus/telldus-java "1.0"]
+    [org.ezand.telldus/telldus-java "1.1"]
 
 # Features
 ### Functionality
