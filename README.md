@@ -72,3 +72,23 @@ Java wrapper around the Telldus CLI (tdtool)
     </td>
   </tr>
 </table>
+
+# Domain
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Device</td>
+    <td>Holds device information, ex. info about switches and dimmers.</td>
+  </tr>
+  <tr>
+    <td>Sensor</td>
+    <td>Holds sensors information, ex. temperature and weather data</td>
+  </tr>
+  <tr>
+    <td>State</td>
+    <td>Holds the device state, ex. 'on' or 'off' for switches and the dim leve (0-255) for dimmers.</td>
+  </tr>
+</table>

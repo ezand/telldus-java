@@ -25,14 +25,6 @@ public class Device {
 				.collect(toMap(Entry::getKey, Entry::getValue));
 	}
 
-	// TODO Remove
-	public Device(Integer id) {
-		this.id = id;
-		this.name = null;
-		this.lastSentCommand = null;
-		this.properties = null;
-	}
-
 	public Integer getId() {
 		return id;
 	}
