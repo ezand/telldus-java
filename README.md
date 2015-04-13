@@ -97,6 +97,6 @@ Java wrapper around the Telldus CLI (tdtool). This is a work in progress, improv
   </tr>
   <tr>
     <td>State</td>
-    <td>Holds the device state, ex. 'on' or 'off' for switches and the dim level (0-255) for dimmers.</td>
+    <td>Holds the device state, ex. 'on' or 'off' for switches and the dim level (0-255) for dimmers. State has a type of currently UNKNOWN, SWITCH or DIMMER (more will be supported later)</td>
   </tr>
 </table>
