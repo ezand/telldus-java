@@ -48,7 +48,9 @@ public class CliRepository implements TelldusRepository {
 	/**
 	 * @param id the device id.
 	 * @return a {@link State} object containing the device type and state.
-	 * The state will be the dim level for dimmers and a {@link RichBoolean} instance for switches.
+	 * For switches the state will be a {@link RichBoolean}.
+	 * For dimmers the state will either be a {@link RichBoolean} or the dim level. It depends on the
+	 * last sent command to the dimmer-device.
 	 * @throws TelldusException if tdtool-command fails fatally.
 	 */
 	@Override
