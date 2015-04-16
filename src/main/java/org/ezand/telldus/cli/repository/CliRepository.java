@@ -7,9 +7,6 @@ import static org.ezand.telldus.cli.utils.CliResultParser.parseDimResult;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseSensors;
 import static org.ezand.telldus.cli.utils.CliResultParser.parseSwitchResult;
 import static org.ezand.telldus.cli.utils.CommandExecutor.execute;
-import static org.ezand.telldus.core.domain.Type.DIMMER;
-import static org.ezand.telldus.core.domain.Type.SWITCH;
-import static org.ezand.telldus.core.domain.Type.UNKNOWN;
 
 import java.util.List;
 
@@ -60,11 +57,11 @@ public class CliRepository implements TelldusRepository {
 		switch (device.getLastSentCommand()) {
 			case ON:
 			case OFF:
-				return new State<>(SWITCH, value);
+				return new State<>(value);
 			case DIMMED:
-				return new State<>(DIMMER, device.getProperties().get("dimlevel"));
+				return new State<>(device.getProperties().get("dimlevel"));
 			default:
-				return new State<>(UNKNOWN, "Unknown state");
+				return new State<>("Unknown state");
 		}
 	}
 
@@ -78,7 +75,7 @@ public class CliRepository implements TelldusRepository {
 	@Override
 	public State<RichBoolean> turnDeviceOn(final int id) throws TelldusException {
 		final boolean success = parseSwitchResult(execute(tdtool, "--on", valueOf(id)).orElse(EMPTY));
-		return new State<>(SWITCH, new RichBoolean(success || ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
+		return new State<>(new RichBoolean(success || ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
 	}
 
 	/**
@@ -92,7 +89,7 @@ public class CliRepository implements TelldusRepository {
 	public State<RichBoolean> turnDeviceOff(final int id) throws TelldusException {
 		final boolean success = parseSwitchResult(execute(tdtool, "--off", valueOf(id)).orElse(EMPTY));
 		//noinspection SimplifiableConditionalExpression
-		return new State<>(SWITCH, new RichBoolean(success ? false : ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
+		return new State<>(new RichBoolean(success ? false : ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
 	}
 
 	/**
@@ -106,6 +103,6 @@ public class CliRepository implements TelldusRepository {
 	 */
 	@Override
 	public State<String> dimDevice(final int id, final int level) throws TelldusException {
-		return new State<>(DIMMER, valueOf(parseDimResult(execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)).orElse(EMPTY))));
+		return new State<>(valueOf(parseDimResult(execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)).orElse(EMPTY))));
 	}
 }
