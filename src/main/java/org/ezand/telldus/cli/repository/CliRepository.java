@@ -17,8 +17,8 @@ import org.ezand.telldus.core.TelldusException;
 import org.ezand.telldus.core.domain.Device;
 import org.ezand.telldus.core.domain.Sensor;
 import org.ezand.telldus.core.domain.State;
-import org.ezand.telldus.core.domain.SwitchState;
 import org.ezand.telldus.core.repository.TelldusRepository;
+import org.ezand.telldus.core.util.RichBoolean;
 
 public class CliRepository implements TelldusRepository {
 	private final String tdtool;
@@ -29,9 +29,10 @@ public class CliRepository implements TelldusRepository {
 
 	/**
 	 * @return a list of {@link Device} objects.
+	 * @throws TelldusException if tdtool-command fails fatally.
 	 */
 	@Override
-	public List<Device> getDevices() {
+	public List<Device> getDevices() throws TelldusException {
 		return parseDevices(execute(tdtool, "--list-devices").orElse(EMPTY));
 	}
 
@@ -47,53 +48,62 @@ public class CliRepository implements TelldusRepository {
 	/**
 	 * @param id the device id.
 	 * @return a {@link State} object containing the device type and state.
+	 * The state will be the dim level for dimmers and a {@link RichBoolean} instance for switches.
 	 * @throws TelldusException if tdtool-command fails fatally.
 	 */
 	@Override
-	public State getDeviceState(final int id) throws TelldusException {
+	public State<?> getDeviceState(final int id) throws TelldusException {
 		final Device device = getDevices().stream().filter(d -> d.getId() == id).findFirst().orElseThrow(() -> new TelldusException("State unknown"));
+		final RichBoolean value = new RichBoolean(device.getLastSentCommand().name());
 		switch (device.getLastSentCommand()) {
 			case ON:
-				return new State(SWITCH, SwitchState.ON.lowerName());
 			case OFF:
-				return new State(SWITCH, SwitchState.OFF.lowerName());
+				return new State<>(SWITCH, value);
 			case DIMMED:
-				return new State(DIMMER, device.getProperties().get("dimlevel"));
+				return new State<>(DIMMER, device.getProperties().get("dimlevel"));
 			default:
-				return new State(UNKNOWN, "Unknown state");
+				return new State<>(UNKNOWN, "Unknown state");
 		}
 	}
 
 	/**
+	 * Will try to switch the device on. If the command fails, the current state of the device will be returned.
+	 *
 	 * @param id the device id.
-	 * @return true if device was successfully switched on, false otherwise.
+	 * @return a {@link RichBoolean} instance with a positive value if device was switched on successfully, a negative value otherwise.
 	 * @throws TelldusException if tdtool-command fails fatally.
 	 */
 	@Override
-	public State turnDeviceOn(final int id) throws TelldusException {
+	public State<RichBoolean> turnDeviceOn(final int id) throws TelldusException {
 		final boolean success = parseSwitchResult(execute(tdtool, "--on", valueOf(id)).orElse(EMPTY));
-		return new State(SWITCH, success ? SwitchState.ON.lowerName() : SwitchState.OFF.lowerName());
+		return new State<>(SWITCH, new RichBoolean(success || ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
 	}
 
 	/**
+	 * Will try to switch the device off. If the command fails, the current state of the device will be returned.
+	 *
 	 * @param id the device id.
-	 * @return true if device was successfully switched off, false otherwise.
+	 * @return a {@link RichBoolean} instance with a negative value if device was switched off successfully, a positive value otherwise.
 	 * @throws TelldusException if tdtool-command fails fatally.
 	 */
 	@Override
-	public State turnDeviceOff(final int id) {
+	public State<RichBoolean> turnDeviceOff(final int id) throws TelldusException {
 		final boolean success = parseSwitchResult(execute(tdtool, "--off", valueOf(id)).orElse(EMPTY));
-		return new State(SWITCH, success ? SwitchState.OFF.lowerName() : SwitchState.ON.lowerName());
+		//noinspection SimplifiableConditionalExpression
+		return new State<>(SWITCH, new RichBoolean(success ? false : ((RichBoolean) getDeviceState(id).getState()).asBoolean()));
 	}
 
 	/**
+	 * Will try to dim the device. If the command fails, the current state of the device will be returned.
+	 *
 	 * @param id    the device id.
 	 * @param level the dim-level value (0-255).
-	 * @return the current dim-level value (0-255) after the operation is finished. Returns -1 if dim-result could not be retrieved.
-	 * @throws TelldusException if tdtool-command fails fatally.
+	 * @return the current dim-level value (0-255) after the operation is finished.
+	 * @throws TelldusException if tdtool-command fails fatally or if the dim value
+	 *                          could not be retrieved from the command result.
 	 */
 	@Override
-	public State dimDevice(final int id, final int level) throws TelldusException {
-		return new State(DIMMER, valueOf(parseDimResult(execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)).orElse(EMPTY))));
+	public State<String> dimDevice(final int id, final int level) throws TelldusException {
+		return new State<>(DIMMER, valueOf(parseDimResult(execute(tdtool, "--dimlevel", valueOf(level), "--dim", valueOf(id)).orElse(EMPTY))));
 	}
 }

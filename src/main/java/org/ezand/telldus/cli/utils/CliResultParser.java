@@ -50,7 +50,7 @@ public class CliResultParser {
 
 	/**
 	 * @param result as a String.
-	 * @return the dim-level value.
+	 * @return the dim-level value (0-255).
 	 * @throws TelldusException if dim result can't be retrieved.
 	 */
 	public static int parseDimResult(final String result) {
