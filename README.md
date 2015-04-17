@@ -2,22 +2,22 @@
 Java wrapper around the Telldus CLI (tdtool). This is a work in progress, improvements are accepted through pull-requests :)
 
 [![Build Status](https://travis-ci.org/ezand/telldus-java.svg?branch=master)](https://travis-ci.org/ezand/telldus-java)
-[![Javadoc](http://javadoc-badge.appspot.com/org.ezand.telldus/telldus-core.svg?label=telldus-core)](http://ezand.org/javadocs/telldus-core/release/1.1/)
-[![Javadoc](http://javadoc-badge.appspot.com/org.ezand.telldus/telldus-java.svg?label=telldus-java)](http://ezand.org/javadocs/telldus-java/release/1.2/)
+[![Javadoc](http://javadoc-badge.appspot.com/org.ezand.telldus/telldus-core.svg?label=telldus-core)](http://ezand.org/javadocs/telldus-core/release/1.4/)
+[![Javadoc](http://javadoc-badge.appspot.com/org.ezand.telldus/telldus-java.svg?label=telldus-java)](http://ezand.org/javadocs/telldus-java/release/1.4/)
 
 # Build Tools
 ### Maven
     <dependency>
         <groupId>org.ezand.telldus</groupId>
         <artifactId>telldus-java</artifactId>
-        <version>1.2</version>
+        <version>1.4</version>
     </dependency>
 
 ### Gradle
-    runtime group: 'org.ezand.telldus', name: 'telldus-java', version: '1.2'
+    runtime group: 'org.ezand.telldus', name: 'telldus-java', version: '1.4'
 
 ### Leiningen
-    [org.ezand.telldus/telldus-java "1.2"]
+    [org.ezand.telldus/telldus-java "1.4"]
 
 # Features
 ### Functionality

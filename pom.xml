@@ -2,7 +2,7 @@
 	<parent>
 		<groupId>org.ezand</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0</version>
+		<version>1.4</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -14,9 +14,14 @@
 	<description>Java wrapper around the Telldus CLI (tdtool)</description>
 
 	<properties>
-		<telldus-core.version>1.1</telldus-core.version>
+		<telldus-core.version>1.4</telldus-core.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
 	</properties>
+
+	<issueManagement>
+		<url>https://github.com/ezand/telldus-java/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
 	<scm>
 		<connection>scm:git:git@github.com:ezand/telldus-java.git</connection>
